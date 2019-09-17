@@ -1,107 +1,128 @@
 #include <iostream>
+#include <sstream>
+#include <string>
 using namespace std;
 
 class Stack {
 private:
-    int capacity;
-    int number;
-    int count = 0;
-    int *mas;
+	int capacity{};
+	int number{};
+	int count = 0;
+	int *mas{};
 
 public:
-    void set_size(int);
+	void set_size(int);
 
-    void push(int);
+	void push(int);
 
-    void pop();
+	void pop();
 
-    void print();
+	void print();
 };
 
 void Stack::set_size(int value) {
-    capacity = value;
-    mas = new int[capacity];
+	capacity = value;
+	mas = new int[capacity];
 
-    for (int i = 0; i < capacity; i++) {
-        mas[i] = -1;
-    }
+	for (int i = 0; i < capacity; i++) {
+		mas[i] = -1;
+	}
 }
 
 void Stack::push(int value) {
-    number = value;
-    mas[count] = number;
-    count++;
+	number = value;
+
+	if (count == capacity) {
+		cout << "overflow";
+	}
+	else {
+		mas[count] = number;
+		count++;
+	}
 }
 
 void Stack::pop() {
-    mas[count] = NULL;
-    count--;
+	if (count == 0) {
+		cout << "underflow";
+	}
+	else {
+		mas[count] = -1;
+		count--;
+	}
 }
 
 void Stack::print() {
-    for (int i = 0; i < capacity; i++) {
-        cout << mas[i] << " ";
-    }
+	if (count == 0) {
+		cout << "empty";
+	}
+	else {
+		for (int i = 0; i < capacity; i++) {
+			if (mas[i] >= -1) {
+				cout << mas[i] << " ";
+			}
+		}
+	}
 }
 
 int definition(string str) {
-    int n;
+	string field = move(str);
+	int n = 0;
 
-    if (str == "set_size") {
-        n = 1;
-    } else if (str == "pop") {
-        n = 2;
-    } else if (str == "push") {
-        n = 3;
-    } else if (str == "print") {
-        n = 4;
-    }
+	if (field == "set_size") {
+		n = 1;
+	}
+	else if (field == "pop") {
+		n = 2;
+	}
+	else if (field == "push") {
+		n = 3;
+	}
+	else if (field == "print") {
+		n = 4;
+	}
 
-    return n;
+	return n;
 }
 
 int main() {
-    string s;
-    string command, str_value;
-    int value, n = 0;
-    Stack st;
+	string s, command;
+	int value, a;
+	Stack st;
+	stringstream ss;
 
-    for (;;) {
-        cin >> s;
+	for (;;) {
+		getline(cin, s);
 
-        for (int i = 0; i <= s.length(); i++) {
-            while (s[i] != ' ') {
-                command += s[i];
-            }
-            if ((s[i] >= '0') && (s[i] <= '9')) {
-                str_value += s[i];
-            } else {
-                value = stoi(str_value);
-            }
-        }
+		ss << s;
+		ss >> command;
+		ss >> value;
 
-        cout << s << " " << command << " " << value;
+		a = definition(command);
 
-        definition(command);
+		switch (a) {
+		case 1: {
+			st.set_size(value);
+			break;
+		}
+		case 2: {
+			st.pop();
+			break;
+		}
+		case 3: {
+			st.push(value);
+			break;
+		}
+		case 4: {
+			st.print();
+			break;
+		}
+		default: {
+			cout << "Error";
+		}
+		}
 
-        switch (n) {
-            case 1: {
-                st.set_size(value);
-                break;
-            }
-            case 2: {
-                st.pop();
-            }
-            case 3: {
-                st.push(value);
-            }
-            case 4: {
-                st.print();
-                break;
-            }
-            default: {
-                cout << "Error";
-            }
-        }
-    }
+		ss.clear();
+
+		system("pause");
+	}
 }
