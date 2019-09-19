@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <array>
 using namespace std;
 
 class Stack {
@@ -18,6 +19,10 @@ public:
     void pop();
 
     void print();
+
+    ~Stack() {
+        delete[] mas;
+    }
 };
 
 void Stack::set_size(int value) {
@@ -30,7 +35,8 @@ void Stack::push(int value) {
 
     if (count == capacity) {
         cout << "overflow";
-    } else {
+    }
+    else {
         mas[count] = number;
         count++;
     }
@@ -39,7 +45,8 @@ void Stack::push(int value) {
 void Stack::pop() {
     if (count == 0) {
         cout << "underflow" << endl;
-    } else {
+    }
+    else {
         count--;
         cout << mas[count] << endl;
     }
@@ -48,10 +55,12 @@ void Stack::pop() {
 void Stack::print() {
     if (count == 0) {
         cout << "empty" << endl;
-    } else {
+    }
+    else {
         for (int i = 0; i < count; i++) {
-            cout << mas[i] << " ";
+                cout << mas[i] << " ";
         }
+        cout << endl;
     }
 }
 
@@ -61,11 +70,14 @@ int definition(string str) {
 
     if (field == "set_size") {
         n = 1;
-    } else if (field == "pop") {
+    }
+    else if (field == "pop") {
         n = 2;
-    } else if (field == "push") {
+    }
+    else if (field == "push") {
         n = 3;
-    } else if (field == "print") {
+    }
+    else if (field == "print") {
         n = 4;
     }
 
@@ -73,8 +85,8 @@ int definition(string str) {
 }
 
 int main() {
-    string s, command;
-    int value, a, x, m;
+    string s, command, tf = "1";
+    int value, a;
     Stack st;
     stringstream ss;
 
@@ -82,37 +94,36 @@ int main() {
         ss << s;
         ss >> command;
         ss >> value;
-        ss >> x;
+        ss >> tf;
 
-        if (x == 10) {
-            x = 0;
-            cout << "error" << endl;
-            goto t;
-        } else {
+        if (tf == "1") {
             a = definition(command);
+
+            switch (a) {
+                case 1: {
+                    st.set_size(value);
+                    break;
+                }
+                case 2: {
+                    st.pop();
+                    t:
+                    break;
+                }
+                case 3: {
+                    st.push(value);
+                    break;
+                }
+                case 4: {
+                    st.print();
+                    break;
+                }
+            }
         }
 
-        switch (a) {
-            case 1: {
-                st.set_size(value);
-                break;
-            }
-            case 2: {
-                st.pop();
-                t:
-                break;
-            }
-            case 3: {
-                st.push(value);
-                break;
-            }
-            case 4: {
-                st.print();
-                cout<<endl;
-                break;
-            }
+        if (tf != "1") {
+            cout << "error" << endl;
+            tf = "1";
         }
-
         ss.clear();
     }
 }
