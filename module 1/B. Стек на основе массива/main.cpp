@@ -7,6 +7,7 @@ using namespace std;
 class Stack {
 private:
     int capacity{};
+    bool set_size_exist=true;
     int number{};
     int count = 0;
     int *mas{};
@@ -26,8 +27,13 @@ public:
 };
 
 void Stack::set_size(int value) {
-    capacity = value;
-    mas = new int[capacity];
+    if (set_size_exist) {
+        capacity = value;
+        mas = new int[capacity];
+        set_size_exist=false;
+    } else {
+        cout<<"error"<<endl;
+    }
 }
 
 void Stack::push(int value) {
