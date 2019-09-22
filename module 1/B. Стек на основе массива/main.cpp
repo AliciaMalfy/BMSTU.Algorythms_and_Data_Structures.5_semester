@@ -34,9 +34,8 @@ void Stack::push(int value) {
     number = value;
 
     if (count == capacity) {
-        cout << "overflow";
-    }
-    else {
+        cout << "overflow" << endl;
+    } else {
         mas[count] = number;
         count++;
     }
@@ -45,8 +44,7 @@ void Stack::push(int value) {
 void Stack::pop() {
     if (count == 0) {
         cout << "underflow" << endl;
-    }
-    else {
+    } else {
         count--;
         cout << mas[count] << endl;
     }
@@ -55,10 +53,13 @@ void Stack::pop() {
 void Stack::print() {
     if (count == 0) {
         cout << "empty" << endl;
-    }
-    else {
+    } else {
         for (int i = 0; i < count; i++) {
+            if (i < count - 1) {
                 cout << mas[i] << " ";
+            } else {
+                cout << mas[i];
+            }
         }
         cout << endl;
     }
@@ -70,14 +71,11 @@ int definition(string str) {
 
     if (field == "set_size") {
         n = 1;
-    }
-    else if (field == "pop") {
+    } else if (field == "pop") {
         n = 2;
-    }
-    else if (field == "push") {
+    } else if (field == "push") {
         n = 3;
-    }
-    else if (field == "print") {
+    } else if (field == "print") {
         n = 4;
     }
 
@@ -91,6 +89,10 @@ int main() {
     stringstream ss;
 
     while (getline(cin, s)) {
+        if (s.empty()) {
+            continue;
+        }
+
         ss << s;
         ss >> command;
         ss >> value;
@@ -105,8 +107,11 @@ int main() {
                     break;
                 }
                 case 2: {
-                    st.pop();
-                    t:
+                    if (value == 1) {
+                        cout << "error" << endl;
+                    } else {
+                        st.pop();
+                    }
                     break;
                 }
                 case 3: {
@@ -117,6 +122,10 @@ int main() {
                     st.print();
                     break;
                 }
+                default: {
+                    cin.ignore();
+                    break;
+                };
             }
         }
 
