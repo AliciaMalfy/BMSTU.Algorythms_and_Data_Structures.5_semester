@@ -7,7 +7,7 @@ using namespace std;
 class Stack {
 private:
     int capacity{};
-    bool set_size_exist=true;
+    bool set_size_exist = true;
     int number{};
     int count = 0;
     int *mas{};
@@ -30,9 +30,9 @@ void Stack::set_size(int value) {
     if (set_size_exist) {
         capacity = value;
         mas = new int[capacity];
-        set_size_exist=false;
+        set_size_exist = false;
     } else {
-        cout<<"error"<<endl;
+        cout << "error" << endl;
     }
 }
 
@@ -129,7 +129,6 @@ int main() {
                     break;
                 }
                 default: {
-                    cin.ignore();
                     break;
                 };
             }
