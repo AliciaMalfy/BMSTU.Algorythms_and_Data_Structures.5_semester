@@ -1,4 +1,4 @@
-.#include <iostream>
+#include <iostream>
 #include <fstream>
 #include <string>
 using namespace std;
@@ -98,8 +98,8 @@ int main(int argc, char *argv[]) {
     if (argc != 1) {
         cout << "error" << endl;
     } else {
-        input.open("argv[1]");
-        output.open("argv[2]");
+        input.open(argv[1]);
+        output.open(argv[2]);
 /*
         while () {
 
