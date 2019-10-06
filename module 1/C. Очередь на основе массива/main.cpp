@@ -1,49 +1,54 @@
 #include <iostream>
 #include <fstream>
+#include <cstdio>
 #include <string>
+#include <sstream>
 using namespace std;
+
+
 
 class Queue {
 private:
     int capacity{};
-    //bool set_size_exist = true;
-    //int number{};
-    //int count = 0;
-    int *mas{};
+    bool set_size_exist = true;
+    string number{};
+    int count = 0;
+    string *mas{};
 
 public:
-    void set_size(int);
+    void set_size(string);
 
-    void push(int);
+    void push(string, char);
 
     void pop();
 
     void print();
-
-    /*~Queue() {
-        delete[] mas;
-    }
-     */
 };
 
-/*
-void Queue::set_size(int value) {
+
+void Queue::set_size(string value) {
     if (set_size_exist) {
-        capacity = value;
-        mas = new int[capacity];
+        capacity = stoi(value);
+        mas = new string[capacity];
         set_size_exist = false;
     } else {
         cout << "error" << endl;
     }
 }
 
-void Queue::push(int value) {
+void Queue::push(string value, char output) {
+    string out(output, sizeof(output));
+    ofstream file;
+    //out.open(output);
     number = value;
 
     if (count == capacity) {
-        cout << "overflow" << endl;
+        file.write("overflow");
+        //cout << "overflow" << endl;
     } else {
-        mas[count] = number;
+        mas[count] = value;
+        file.write(mas[count], sizeof(mas[]));
+        file.write(" ", );
         count++;
     }
 }
@@ -88,80 +93,53 @@ int definition(string str) {
 
     return n;
 }
- */
+
 
 int main(int argc, char *argv[]) {
     ifstream input;
     ofstream output;
     Queue que;
+    stringstream ss;
+    string command, value;
+    int a;
 
-    if (argc != 1) {
+    if (argc >= 2) {
         cout << "error" << endl;
     } else {
         input.open(argv[1]);
         output.open(argv[2]);
-/*
-        while () {
 
-        }
-        */
-    }
-}
+        while (! input.eof()) {
+            string str;
+            getline(input, str);
+            ss << str;
+            ss >> command;
+            ss >> value;
 
-
-
-/*
-    string s, command, tf = "1";
-    int value, a;
-
-    stringstream ss;
-
-
-    while (getline(cin, s)) {
-        if (s.empty()) {
-            continue;
-        }
-
-        ss << s;
-        ss >> command;
-        ss >> value;
-        ss >> tf;
-
-        if (tf == "1") {
             a = definition(command);
 
             switch (a) {
                 case 1: {
-                    st.set_size(value);
+                    que.set_size(value);
                     break;
                 }
                 case 2: {
-                    if (value == 1) {
-                        cout << "error" << endl;
-                    } else {
-                        st.pop();
-                    }
+                    que.pop();
                     break;
                 }
                 case 3: {
-                    st.push(value);
+                    que.push(value, *argv[2]);
                     break;
                 }
                 case 4: {
-                    st.print();
+                    que.print();
                     break;
                 }
                 default: {
                     break;
                 };
             }
+            ss.clear();
         }
-
-        if (tf != "1") {
-            cout << "error" << endl;
-            tf = "1";
-        }
-        ss.clear();
     }
 }
- */
